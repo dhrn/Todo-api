@@ -20,26 +20,31 @@ public class TodoController {
     }
 
     @RequestMapping("/todos")
+    @ResponseBody
     public List<Todos> getAllTodos() {
         return todoService.getAllTodos();
     }
 
     @RequestMapping("/todos/{id}")
+    @ResponseBody
     public Optional<Todos> getTodosById(@PathVariable Integer id) {
         return todoService.getAllTodosById(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, name = "/todos")
+    @RequestMapping(method = RequestMethod.POST, value = "/todos")
+    @ResponseBody
     public Todos createTodo(@RequestBody Todos todo) {
         return todoService.createTodo(todo);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, name = "/todos/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/todos/{id}")
+    @ResponseBody
     public Todos updateTodo(@RequestBody Todos todo, @PathVariable Integer id) {
         return todoService.updateTodo(id, todo);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, name = "/todos/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/todos/{id}")
+    @ResponseBody
     public Optional<Todos> updateTodo(@PathVariable Integer id) {
         return todoService.deleteTodo(id);
     }
