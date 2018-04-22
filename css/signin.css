@@ -12,6 +12,16 @@
     left: calc(50% - 175px);
 }
 
+.msgBox{
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    z-index: 100;
+    transform: translate(-50%,0%);
+    border-radius: 2px;
+    padding: 5px;
+}
+
 input {
     margin-top: 10px;
     border: 1px solid #c3afaf;

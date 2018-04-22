@@ -89,8 +89,19 @@ var Authentication = (function() {
                         url: "signin",
                         data: userDetails,
                         success: function(msg) {
-                            $("#response-container").text(JSON.stringify(msg))
+                            if( msg.hasOwnProperty( "sucess" ) ){
+                                $("#response-container")[0].style[ "background-color" ] = "#9e9e9e";
+                                $("#response-container").text(JSON.stringify("Welcome ..! Logged in sucessfully ..!"));
+                            } else {
+                                $("#response-container")[0].style[ "background-color" ] = "#9e9e9e";
+                                $("#response-container").text(JSON.stringify( "Oops ..! UserName or Pasword is Incorrect ..!" ))
+                            }
+                            
                             console.log(msg);
+                            setTimeout(function(){
+                                $("#response-container").text("");
+                                $("#response-container")[0].style[ "background-color" ] = "transparent";
+                            }, 3000);
                         },
                         error: function(jqHR, textStatus, errorThrown) {
                             console.log(" textStatus " + textStatus);
@@ -110,22 +121,22 @@ var Authentication = (function() {
                 validateOnBlur: validateOnBlur
             };
             /*$.ajax({
-            	type: "POST",//no i18n
-            	dataType: 'json', //No i18n
-            	contentType:"application/json;charset=utf-8",
-            	async: true,
-            	url: "/hello",//No I18N
-            	data:  {'username': name,'password': password },
-            	success : function(msg) {
-            		console.log(" SUCCESS "+ msg);
-            	},
-            	error : function(jqHR, textStatus, errorThrown) {
-            		console.log(" textStatus "+ textStatus);
-            		console.log(" jqHR ::: "+ JSON.stringify(jqHR));
-            		$("#error-cont").html(jqHR.responseText);
-            		console.log(" errorThrown ::: "+ errorThrown);
-            		
-            	}
+                type: "POST",//no i18n
+                dataType: 'json', //No i18n
+                contentType:"application/json;charset=utf-8",
+                async: true,
+                url: "/hello",//No I18N
+                data:  {'username': name,'password': password },
+                success : function(msg) {
+                    console.log(" SUCCESS "+ msg);
+                },
+                error : function(jqHR, textStatus, errorThrown) {
+                    console.log(" textStatus "+ textStatus);
+                    console.log(" jqHR ::: "+ JSON.stringify(jqHR));
+                    $("#error-cont").html(jqHR.responseText);
+                    console.log(" errorThrown ::: "+ errorThrown);
+                    
+                }
             }); */
         },
 
@@ -249,9 +260,19 @@ var Authentication = (function() {
                         url: "signup",
                         data: userDetails,
                         success: function(msg) {
-                            $("#response-container").text(JSON.stringify(msg))
+                            if( msg.hasOwnProperty( "sucess" ) ){
+                                $("#response-container")[0].style[ "background-color" ] = "#9e9e9e";
+                                $("#response-container").text(JSON.stringify( "Welcome to Our Page ..! Your Signup is sucessfully completed ..!" ));
+                            } else {
+                                $("#response-container")[0].style[ "background-color" ] = "#9e9e9e";
+                                $("#response-container").text(JSON.stringify( "Oops ..! Something went wrong ..!" ))
+                            }
                             console.log(msg);
                             console.log(userDetails);
+                            setTimeout(function(){ 
+                                $("#response-container").text(""); 
+                                $("#response-container")[0].style[ "background-color" ] = "transparent";
+                            }, 3000);
                         },
                         error: function(jqHR, textStatus, errorThrown) {
                             console.log(" textStatus " + textStatus);
