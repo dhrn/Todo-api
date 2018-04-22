@@ -1,0 +1,57 @@
+#container{
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/dummy-bg.jpg);
+}
+
+.form-cont{
+    position: absolute;
+    height: 300px;
+    width: auto;
+    top: 30%;
+    left: calc(50% - 175px);
+}
+
+input {
+    margin-top: 10px;
+    border: 1px solid #c3afaf;
+    border-radius: 2px;
+    width: 350px;
+    height: 40px;
+    outline: none;
+    padding: 15px;
+    font-size: 17px;
+}
+
+.button-cont {
+    margin: 10px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    color: #7d4f4f;
+    border-radius: 15px;
+    position: absolute;
+    border: 2px solid #c3afaf;
+    width: 100px;
+}
+
+.left-align-btn {
+    left: 12px;
+}
+
+.right-align-btn {
+    right: 12px;
+}
+
+input::-webkit-input-placeholder {
+    color: gray;
+    font-size: 17px;
+    font-style: italic;
+}
+
+#login-title{
+    color: #7d4f4f;
+    font-size: 20px;    
+}
