@@ -17,7 +17,9 @@
 			"imgLabel"	: "",
 			"placeHolder"		: "",
 			"optionLimit"		: 5,
-			"searchBarRatio"	: [4,1]
+			"searchBarRatio"	: [4,1],
+			"button-CSS"	: Utils.clone( styleSheet ),
+			"inputField-CSS"	: Utils.clone( styleSheet )
 		};
 	};
 	
@@ -41,8 +43,10 @@
 		this.height = this.container.clientHeight,
 		this.width = this.container.clientWidth;
 		this.canRender = false;
+		this.id = "c-input-field-" + Utils.randomNumber(5);
 		
 		this.input = document.createElement('input');
+		this.input.setAttribute( "id", this.id );
 		this.button = document.createElement('button');
 		this.inputDiv = document.createElement( 'div' );
 		this.buttonDiv = document.createElement( 'div' );
@@ -63,9 +67,6 @@
 	};
 	
 	SearchBar.prototype.setStyleForInputDiv = function(){
-//		node.setAttribute( 'contenteditable', true );
-//		node.className += "single-line";
-//		node.style.outline = "none";
 		this.inputDiv.style.height = "inherit";
 		this.inputDiv.style.width = this.properties.searchBarRatio[ 0 ] + "%";
 		this.inputDiv.style.float = "left";
@@ -93,10 +94,21 @@
 		}
 		this.buttonDiv.appendChild( this.button );
 	};
+	
+	SearchBar.prototype.setCSSForButtonAndInputDiv = function(){
+		var buttonCSS = this.properties[ "button-CSS" ];
+		var inputFieldCSS = this.properties[ "inputField-CSS" ];
+		for( var key in buttonCSS ){
+			this.button.style = buttonCSS[ key ];
+		}
+		for( var key in inputFieldCSS ){
+			this.input.style = inputFieldCSS[ key ];
+		}
+	};
 
 	SearchBar.prototype.setSearchDomInContainer = function(){
 		this.properties.searchBarRatio = getRatioInPercentage( this.properties.searchBarRatio );
-		
+		this.setCSSForButtonAndInputDiv();
 		this.setStyleForInputDiv();
 		this.setStyleForButtonDiv();
 		this.container.appendChild( this.inputDiv );
@@ -106,11 +118,20 @@
 	SearchBar.prototype.render = function(){
 		this.canRender = true;
 		this.setSearchDomInContainer();
-
-		if( this.properties.isElasticSearch == "true" ){
-			//keyEventBinder && enter/onclick
+		var elem = document.getElementById( this.id );
+		
+		if( this.properties.isElasticSearch == true ){
+			//keyEventBinder && enter
+			elem.onkeypress = function(ev) {
+				this.execute();
+			}.bind( this );
 		} else {
-			// enter/onclick
+			// enter
+			elem.onkeypress = function(ev) {
+				if(ev.key == "Enter"){
+					this.execute();
+				}
+			}.bind( this );
 		}
 		
 	};
