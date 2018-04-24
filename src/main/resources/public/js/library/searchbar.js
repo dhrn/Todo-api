@@ -14,7 +14,7 @@
 		return {
 			"isElasticSearch" 	: false,
 			"label"		: "Search",
-			"imgLabel"	: "",
+			"isImgLabel"	: false,
 			"placeHolder"		: "",
 			"optionLimit"		: 5,
 			"searchBarRatio"	: [4,1],
@@ -86,7 +86,7 @@
 		this.button.style.width = "100%";
 		this.button.style.height = "inherit";
 		this.button.onclick = this.execute;
-		if( !this.properties.imgLabel ){
+		if( !this.properties.isImgLabel ){
 			this.button.innerText = this.properties.label;
 			this.button.style.fontSize = getCalculatedFontSize( this.height );
 		} else {
@@ -98,11 +98,40 @@
 	SearchBar.prototype.setCSSForButtonAndInputDiv = function(){
 		var buttonCSS = this.properties[ "button-CSS" ];
 		var inputFieldCSS = this.properties[ "inputField-CSS" ];
+		
+		if( this.properties.isImgLabel ){
+			this.button.remove()
+			this.button = document.createElement( "img" );
+		} else {
+			this.button.remove()
+			this.button = document.createElement( "button" );
+		}
+		
 		for( var key in buttonCSS ){
-			this.button.style = buttonCSS[ key ];
+			try{
+				if( key == "src" && buttonCSS[ key ] != "" ){
+					this.button.setAttribute( key, buttonCSS[ key ]);
+				} else {
+					this.button.style[ key ] = buttonCSS[ key ];
+				}
+				
+			} catch(e){
+				//exception
+				//console.log("button-css-EXception", key,":::::::", e);
+			}
 		}
 		for( var key in inputFieldCSS ){
-			this.input.style = inputFieldCSS[ key ];
+			try{
+				if( key == "src" && inputFieldCSS[ key ] != "" ){
+					this.input.setAttribute( key, inputFieldCSS[ key ]);
+				} else {
+					this.input.style[ key ] = inputFieldCSS[ key ];
+				}
+				
+			} catch(e){
+				//exception
+				//console.log("input-field-css-EXception", key ,":::::::", e);
+			}
 		}
 	};
 
@@ -118,16 +147,15 @@
 	SearchBar.prototype.render = function(){
 		this.canRender = true;
 		this.setSearchDomInContainer();
-		var elem = document.getElementById( this.id );
 		
 		if( this.properties.isElasticSearch == true ){
 			//keyEventBinder && enter
-			elem.onkeypress = function(ev) {
+			this.input.onkeypress = function(ev) {
 				this.execute();
 			}.bind( this );
 		} else {
 			// enter
-			elem.onkeypress = function(ev) {
+			this.input.onkeypress = function(ev) {
 				if(ev.key == "Enter"){
 					this.execute();
 				}
