@@ -10244,6 +10244,7 @@ jQuery.noConflict = function( deep ) {
 // and CommonJS for browser emulators (#13566)
 if ( !noGlobal ) {
 	window.jQuery = window.$ = jQuery;
+	window.J = window.$ = jQuery;
 }
 
 

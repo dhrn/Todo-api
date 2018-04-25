@@ -22,6 +22,20 @@
     padding: 5px;
 }
 
+.search-container{
+    width: 700px;
+    height: 50px;
+    border: 1px solid #c3afaf;
+    margin: auto;
+}
+
+.list-container{
+    width: 700px;
+    height: auto;
+    /*border: 1px solid #c3afaf;*/
+    margin: auto;
+}
+
 input.text-box {
     margin-top: 10px;
     border: 1px solid #c3afaf;

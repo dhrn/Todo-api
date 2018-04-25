@@ -10,15 +10,17 @@
  *	var x = new SearchBar("test",function(){console.log("sucess")});
  *	x.render()
  * */
-	var getDefaultProperties = function(){
+	var getDefaultProperties = function( callback ){
 		return {
 			"isElasticSearch" 	: false,
-			"label"		: "Search",
-			"isImgLabel"	: false,
+			"onRenderCallback"	: callback,
+			"onSucessClear"		: false,
+			"label"				: "Search",
+			"isImgLabel"		: false,
 			"placeHolder"		: "",
 			"optionLimit"		: 5,
 			"searchBarRatio"	: [4,1],
-			"button-CSS"	: Utils.clone( styleSheet ),
+			"button-CSS"		: Utils.clone( styleSheet ),
 			"inputField-CSS"	: Utils.clone( styleSheet )
 		};
 	};
@@ -51,8 +53,8 @@
 		this.inputDiv = document.createElement( 'div' );
 		this.buttonDiv = document.createElement( 'div' );
 		
-		this.properties = getDefaultProperties();
-		//return this.properties;
+		this.properties = getDefaultProperties( callback );
+		
 	};
 
 	SearchBar.prototype.setProperties = function( properties ){
@@ -85,7 +87,16 @@
 		this.buttonDiv.style.float = "left";
 		this.button.style.width = "100%";
 		this.button.style.height = "inherit";
-		this.button.onclick = this.execute;
+		
+		if( typeof this.properties.onRenderCallback === "function" ){
+			this.button.onclick = function(){
+				this.properties.onRenderCallback( this.input.value, function(){ //onsucess callback
+					if( this.properties.onSucessClear ){
+						this.input.value = "";
+					}
+				 }.bind(this) );
+			}.bind(this)
+		}
 		if( !this.properties.isImgLabel ){
 			this.button.innerText = this.properties.label;
 			this.button.style.fontSize = getCalculatedFontSize( this.height );
@@ -135,7 +146,7 @@
 		}
 	};
 
-	SearchBar.prototype.setSearchDomInContainer = function(){
+	SearchBar.prototype.setDomInContainer = function(){
 		this.properties.searchBarRatio = getRatioInPercentage( this.properties.searchBarRatio );
 		this.setCSSForButtonAndInputDiv();
 		this.setStyleForInputDiv();
@@ -146,27 +157,35 @@
 
 	SearchBar.prototype.render = function(){
 		this.canRender = true;
-		this.setSearchDomInContainer();
+		this.setDomInContainer();
 		
 		if( this.properties.isElasticSearch == true ){
 			//keyEventBinder && enter
 			this.input.onkeypress = function(ev) {
-				this.execute();
+				if( typeof this.properties.onRenderCallback === "function" ){
+					this.properties.onRenderCallback( this.input.value, function(){ //onsucess callback
+						if( this.properties.onSucessClear ){
+							this.input.value = "";
+						}
+				 	}.bind(this) );
+				}
 			}.bind( this );
 		} else {
 			// enter
 			this.input.onkeypress = function(ev) {
 				if(ev.key == "Enter"){
-					this.execute();
+					if( typeof this.properties.onRenderCallback === "function" ){
+						this.properties.onRenderCallback( this.input.value, function(){ //onsucess callback
+							if( this.properties.onSucessClear ){
+								this.input.value = "";
+							}
+				 		}.bind(this) );
+					}
 				}
 			}.bind( this );
 		}
 		
 	};
-
-	SearchBar.prototype.startSearching = function(){
-
-	};
-
+	
 	window.SearchBar = SearchBar;
 })();
