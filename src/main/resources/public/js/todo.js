@@ -15,7 +15,7 @@ var Todo = (function(){
 
 		var callback = function( value , onSucess ){
 		  //onsucess
-		  cardView.push(value);
+		  cardView.unshift(value);
 		  onSucess();
 		};
 

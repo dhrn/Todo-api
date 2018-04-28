@@ -326,7 +326,7 @@
         
         
         this.content.splice( rmvIdx , length );
-        this.domArr.splice( rmvIdx , length     );
+        this.domArr.splice( rmvIdx , length );
         
         for( var idx = 0; idx < length; idx++ ){
             var removingElem = removedDomElems[ idx ],
