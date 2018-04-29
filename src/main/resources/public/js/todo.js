@@ -51,7 +51,7 @@ var Todo = (function(){
 				}
 				var textNode = node.getElementsByClassName( "textData" )[0],
 				selectionNode = node.getElementsByClassName( "checkBox" )[0],
-				checked = selectionNode.getAttribute("checked");
+				checked = selectionNode && selectionNode.getAttribute("checked");
 				if( checked == "false" ){
 					textNode.style.textDecoration = "line-through";
 					textNode.style.color = "grey";
