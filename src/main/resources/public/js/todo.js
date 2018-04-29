@@ -11,26 +11,26 @@ var Todo = (function(){
 			var div = document.createElement( "div" ),
 			contDiv = document.createElement( "div" ),
 			selectDiv = document.createElement( "div" ),
-			checkBox = document.createElement( "input" ),
 			closeDiv = document.createElement( "div" );
-	
-			selectDiv.appendChild( checkBox );
+			
+			selectDiv.setAttribute( "checked", "false" );
 			closeDiv.innerText = "x";
 			contDiv.innerHTML = param;
-	
-			checkBox.setAttribute( "type", "checkbox" );
-			checkBox.style.cursor = "pointer";
 	
 			closeDiv.style.float = "right";
 			closeDiv.style.border = "1px solid white"
 			closeDiv.style.width = "20px";
 			closeDiv.style.height = "20px";
 			closeDiv.style.textAlign = "center";
-			closeDiv.style.borderRadius = "5px";
+			closeDiv.style.borderRadius = "15px";
 			closeDiv.style.color = "white";
 			closeDiv.style.backgroundColor = "red"
 			closeDiv.style.cursor = "pointer";
 			selectDiv.style.margin = "10px";
+			selectDiv.style.border = "1px solid grey";
+			selectDiv.style.width = "20px";
+			selectDiv.style.height = "20px";
+			selectDiv.style.borderRadius = "15px";
 			selectDiv.style.float = "left";
 			contDiv.style.float = "left";
 	
@@ -42,17 +42,28 @@ var Todo = (function(){
 			div.style.height = "50px";
 			contDiv.style[ "font-size" ] = ( parseFloat( div.style.height ) * 6 ) / 10 + "px";
 			contDiv.className = "textData";
-	
-			checkBox.onchange = function(ev){
-				var node = ev.target,
-				textNode = node.parentElement.parentElement.getElementsByClassName( "textData" )[0];
-				if(node.checked){
+			selectDiv.className = "checkBox";
+
+			div.onclick = function(ev){
+				var node = ev.target;
+				if( node.className.indexOf( "textData" ) != -1 || node.className.indexOf( "checkBox" ) != -1 ){
+					node = node.parentElement;
+				}
+				var textNode = node.getElementsByClassName( "textData" )[0],
+				selectionNode = node.getElementsByClassName( "checkBox" )[0],
+				checked = selectionNode.getAttribute("checked");
+				if( checked == "false" ){
 					textNode.style.textDecoration = "line-through";
 					textNode.style.color = "grey";
-				} else {
+					selectionNode.style.backgroundColor = "lightblue";
+					selectionNode.setAttribute( "checked", "true" );
+				} else if( checked == "true" ){
 					textNode.style.textDecoration = "none";
 					textNode.style.color = "black";
+					selectionNode.style.backgroundColor = "white";
+					selectionNode.setAttribute( "checked", "false" );
 				}
+				
 			}
 			closeDiv.onclick = function(){removeNode( div )};    
 			  return div;
