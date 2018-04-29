@@ -18,6 +18,26 @@
         }
         
     };
+    
+    var getListElem = function( node ){
+        //process until body only
+        
+        var nodeName =  node.nodeName.toLowerCase();
+        if( nodeName == 'body' ){
+            return false;
+        }
+        
+        do{
+            if( node.nodeName.toLowerCase() == 'body' ){
+                return false;
+            } else if( J( node ).hasClass( 'dd-panelElement' ) ){
+                return node;
+            }
+            node = node.parentNode;
+ 
+        }while( node );
+        
+    };
 	
 	var DropDownList = function( cont, containerId, callback ){
 		this.content = [];
@@ -40,10 +60,10 @@
         this.insert( this.content.length, [cont] );
     };
     DropDownList.prototype.pop = function(){
-        this.remove( this.content.length - 1, 1 );
+        return this.remove( this.content.length - 1, 1 )[0];
     };
     DropDownList.prototype.shift = function(){
-        this.remove( 0, 1 );
+        return this.remove( 0, 1 )[0];
     };
     DropDownList.prototype.unshift = function( cont ){
         this.insert( 0, [cont] );
@@ -51,9 +71,14 @@
     DropDownList.prototype.concat = function( cont ){
         this.insert( this.content.length, cont );
     };
-	
+    DropDownList.prototype.indexOf = function( node ){
+    	var panelElem = getListElem( node );
+    	return this.domArr.indexOf( panelElem );
+    };
+    
 	DropDownList.prototype.remove = function( index, length ){
-		var removeDomElems = this.domArr.slice( index , index + length );
+		var removeDomElems = this.domArr.slice( index , index + length ),
+		removedContents = this.content.slice( index , index + length );
 		this.content.splice( index , length );
         this.domArr.splice( index , length );
         
@@ -61,7 +86,7 @@
         	var removingElem = removeDomElems[ idx ];
         	this.container.removeChild( removingElem );
         }
-        
+        return removedContents;
 	};
 	
 	DropDownList.prototype.insert = function( index, cont ){
