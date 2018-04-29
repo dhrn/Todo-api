@@ -1,0 +1,50 @@
+<html>
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+      <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+      <meta content="" name="description"/>
+      <meta content="" name="author"/>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link href="images/office_fav.ico" rel="shortcut icon" type="image/x-icon" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/signin.css">
+      <script type="text/javascript" src="js/welcome.js"></script>
+   </head>
+   <body class="body">
+      <div id="container">
+         <div id="response-container" class="msgBox" ></div>
+         <div id="logo-bg">
+            <div id="login-cont" class="form-cont" style="display: block;">
+               <span id="login-title"> LOG IN </span>
+               <div id="lnamae-invalid-msg-cont"></div>
+               <input class="text-box" type="text" name="email" placeholder="Email address" id="signInName" onblur="Authentication.signIn( id )"/>
+               <div id="lpassword-invalid-msg-cont"></div>
+               <input class="text-box" type="password" name="password" placeholder="Password" id="signInPass" onblur="Authentication.signIn( id )"/>
+               </br>
+               <div class="button-cont">
+                  <button id="login-button" class="left-align-btn text-box-btn" onclick="Authentication.signIn( id )"> Log In </button>
+                  <button id="register-button" class="right-align-btn text-box-btn" onclick="Authentication.switchForms()"> Register </button>
+               </div>
+            </div>
+            <div id="register-cont" style="display: none;"  class="form-cont">
+               <span id="login-title"> REGISTER FORM </span></br>
+               <div id="name-invalid-msg-cont"></div>
+               <input class="text-box" type="text" name="username" placeholder="Username" id="signUpName" onblur="Authentication.signUp( id )" />
+               <div id="email-invalid-msg-cont"></div>
+               <input class="text-box" type="text" name="email" placeholder="Email address" id="signUpEmail" onblur="Authentication.signUp( id )" />
+               <div id="password-invalid-msg-cont"></div>
+               <input class="text-box" type="password" name="password" placeholder="Password" id="signUpPass" onblur="Authentication.signUp( id )" />
+               <div id="rpassword-invalid-msg-cont"></div>
+               <input class="text-box" type="password" name="rpassword" placeholder="Confirm Password" id="signUpRPass" onblur="Authentication.signUp( id )" />
+               </br>
+               <div class="button-cont">
+                  <button id="register-me-button" class="left-align-btn text-box-btn" onclick="Authentication.signUp( id )"> Register </button>
+                  <button id="back-to-login" class="right-align-btn text-box-btn" onclick="Authentication.switchForms()"> back </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
