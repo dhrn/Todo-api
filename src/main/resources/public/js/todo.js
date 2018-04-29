@@ -5,14 +5,21 @@ var Todo = (function(){
 			var index = ddList.indexOf(node);
 			ddList.remove(index,1)
 		};
-
-		var ddList = new DropDownList( [],"todo-list", function( param ){ 
+		
+		var getView = function(param){
+		 
 			var div = document.createElement( "div" ),
 			contDiv = document.createElement( "div" ),
+			selectDiv = document.createElement( "div" ),
+			checkBox = document.createElement( "input" ),
 			closeDiv = document.createElement( "div" );
 	
+			selectDiv.appendChild( checkBox );
 			closeDiv.innerText = "x";
 			contDiv.innerHTML = param;
+	
+			checkBox.setAttribute( "type", "checkbox" );
+			checkBox.style.cursor = "pointer";
 	
 			closeDiv.style.float = "right";
 			closeDiv.style.border = "1px solid white"
@@ -22,17 +29,37 @@ var Todo = (function(){
 			closeDiv.style.borderRadius = "5px";
 			closeDiv.style.color = "white";
 			closeDiv.style.backgroundColor = "red"
+			closeDiv.style.cursor = "pointer";
+			selectDiv.style.margin = "10px";
+			selectDiv.style.float = "left";
 			contDiv.style.float = "left";
 	
+			div.appendChild( selectDiv );
 			div.appendChild( contDiv );
 			div.appendChild( closeDiv );
 			div.style.border = "1px solid #c3afaf";
 			div.style.padding = "10px";
 			div.style.height = "50px";
 			contDiv.style[ "font-size" ] = ( parseFloat( div.style.height ) * 6 ) / 10 + "px";
+			contDiv.className = "textData";
+	
+			checkBox.onchange = function(ev){
+				var node = ev.target,
+				textNode = node.parentElement.parentElement.getElementsByClassName( "textData" )[0];
+				if(node.checked){
+					textNode.style.textDecoration = "line-through";
+					textNode.style.color = "grey";
+				} else {
+					textNode.style.textDecoration = "none";
+					textNode.style.color = "black";
+				}
+			}
 			closeDiv.onclick = function(){removeNode( div )};    
 			  return div;
-		} );
+	
+		};
+
+		var ddList = new DropDownList( [],"todo-list", getView );
 
 		ddList.render();
 
